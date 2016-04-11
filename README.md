@@ -22,9 +22,9 @@ Dependencies
 | kibana\_config             | path to kibana.yml | {{ \_\_kibana\_config\_dir }}/kibana.yml (see vars/\*.yml) |
 | kibana\_server\_port       | server.port | 5601 |
 | kibana\_server\_host       | server.host | 0.0.0.0 |
-| kibana\_bathPath           | kibana.basePath | "" |
+| kibana\_server\_basePath   | server.basePath | nil |
 | kibana\_elasticsearch\_url | elasticsearch.url | http://localhost:9200 |
-| kibana\_index              | kibana.index | .kibana |
+| kibana\_kibana\_index      | kibana.index | .kibana |
 | kibana\_logging\_dest      | kibana.logging\_dest | stdout |
 
 Example Playbook

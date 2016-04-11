@@ -1,6 +1,8 @@
 server.port: {{ kibana_server_port }}
 server.host: {{ kibana_server_host }}
-server.basePath: "{{ kibana_bathPath }}"
+{% if kibana_server_basePath -%}
+server.basePath: "{{ kibana_server_basePath }}"
+{% endif -%}
 elasticsearch.url: "{{ kibana_elasticsearch_url }}"
 # The Elasticsearch instance to use for all your queries.
 
