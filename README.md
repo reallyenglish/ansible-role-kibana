@@ -18,8 +18,8 @@ Dependencies
 
 | Name | Description | Default|
 |------|-------------|--------|
-| kibana\_service\_name      | service name | \_\_kibana\_service\_name |
-| kibana\_config             | path to kibana.yml | \_\_kibana\_config\_dir |
+| kibana\_service\_name      | service name | {{ \_\_kibana\_service\_name }} (see vars/\*.yml) |
+| kibana\_config             | path to kibana.yml | {{ \_\_kibana\_config\_dir }}/kibana.yml (see vars/\*.yml) |
 | kibana\_server\_port       | server.port | 5601 |
 | kibana\_server\_host       | server.host | 0.0.0.0 |
 | kibana\_bathPath           | kibana.basePath | "" |
