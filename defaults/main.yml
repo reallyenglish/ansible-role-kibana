@@ -1,0 +1,10 @@
+---
+# defaults file for ansible-role-kibana
+kibana_service_name: "{{ __kibana_service_name }}"
+kibana_config: "{{ __kibana_config_dir }}/kibana.yml"
+kibana_server_port: 5601
+kibana_server_host: 0.0.0.0
+kibana_bathPath:
+kibana_elasticsearch_url: http://localhost:9200
+kibana_index: .kibana
+kibana_logging_dest: stdout

@@ -1,0 +1,4 @@
+---
+
+- name: Ensure kibana is installed
+  pkgng: name=kibana45 state=present

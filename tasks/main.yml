@@ -1,0 +1,17 @@
+---
+# tasks file for ansible-role-kibana
+
+- include_vars: "{{ ansible_os_family }}.yml"
+
+- name: "Create log directory"
+  file: path="{{ kibana_logging_dest | dirname }}"
+  when: kibana_logging_dest != 'stdout'
+
+- include: install-{{ ansible_os_family }}.yml
+
+- name: "Configure kibana.yml"
+  template: src='kibana.yml.j2' dest="{{ kibana_config }}" mode=644
+  notify: "Restart kibana"
+
+- name: Starting kibana
+  service: name="{{ kibana_service_name }}" state="started" enabled="yes"

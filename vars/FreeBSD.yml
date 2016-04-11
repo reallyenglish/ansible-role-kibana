@@ -1,0 +1,3 @@
+---
+__kibana_config_dir: /usr/local/etc
+__kibana_service_name: kibana
