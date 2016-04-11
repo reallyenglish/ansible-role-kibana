@@ -16,7 +16,8 @@ A description of the settable variables for this role should go here, including 
 Dependencies
 ------------
 
-| Name | Description|Default|
+| Name | Description | Default|
+|------|-------------|--------|
 | kibana\_service\_name      | service name | \_\_kibana\_service\_name |
 | kibana\_config             | path to kibana.yml | \_\_kibana\_config\_dir |
 | kibana\_server\_port       | server.port | 5601 |
