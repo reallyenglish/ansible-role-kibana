@@ -9,7 +9,7 @@ require 'serverspec'
 # ...
 # {"type":"log","@timestamp":"2016-04-11T23:39:17+00:00","tags":["listening","info"],"pid":1029,"message":"Server running at http://0.0.0.0:5601"}
 
-sleep 50
+sleep 150
 
 kibana_package_name = 'kibana'
 kibana_service_name = 'kibana'

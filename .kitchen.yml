@@ -11,9 +11,9 @@ provisioner:
   ansible_verbose: true
 
 platforms:
-  - name: freebsd-10.2-amd64
+  - name: freebsd-10.3-amd64
     driver:
-      box: trombik/test-freebsd-10.2-amd64
+      box: trombik/ansible-freebsd-10.3-amd64
       box_check_update: false
     driver_config:
       ssh:
