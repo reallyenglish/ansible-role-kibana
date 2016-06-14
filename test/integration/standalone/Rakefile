@@ -1,0 +1,58 @@
+require 'tempfile'
+require 'pathname'
+
+test_dir = Pathname.new(__FILE__).dirname
+role_dir = Pathname.new(test_dir).parent.parent.parent
+role_name = Pathname.new(role_dir).basename
+
+task default: %w[ test ]
+
+desc 'run rspec'
+task :test => [ :cleanup, :prepare, :do_test, :ensure_cleanup ] do
+end
+
+desc 'cleanup'
+task :cleanup => [ :cleanup_vagrant, :cleanup_role ] do
+end
+
+desc 'destroy vagrant nodes'
+task :cleanup_vagrant do
+  sh 'vagrant destroy -f'
+end
+
+desc 'rm roles/*'
+task :cleanup_role do
+  sh 'rm -rf roles/*'
+end
+
+desc 'prepare the test environment'
+task :prepare => [ :prepare_role, :vagrant_up ] do
+end
+
+desc 'prepare role'
+task :prepare_role do
+  ignore_files = %w[ vendor .kitchen .git test spec ].map { |f| "#{role_name}/#{f}" }
+  tmpfile = Tempfile.new('.tarignore')
+  tmpfile.write ignore_files.join("\n")
+  tmpfile.close
+  sh "tar -c -X #{tmpfile.path} -C #{role_dir.parent} -f - #{role_name} | tar -x -C #{test_dir}/roles -f -"
+end
+
+desc 'vagrant up'
+task :vagrant_up do
+  sh 'vagrant up'
+end
+
+desc 'do cleanup task even if it has been executed'
+task :ensure_cleanup do
+  Rake::Task["cleanup"].all_prerequisite_tasks.each do |task|
+    task.reenable
+  end
+  Rake::Task["cleanup"].reenable
+  Rake::Task["cleanup"].invoke
+end
+
+desc 'Do the test'
+task :do_test do
+  sh 'bundle exec rspec'
+end
