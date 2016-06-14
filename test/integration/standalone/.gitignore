@@ -1,2 +1,3 @@
 *.retry
 roles/ansible-role-kibana/
+.vagrant/
