@@ -11,7 +11,7 @@ describe server(:kibana) do
       begin
         visit '/'
         raise ServiceNotReady if page.status_code == nil
-      rescue ServiceNotReady
+      rescue ServiceNotReady, Capybara::Poltergeist::StatusFailError
         if (try + 1) <= limit
           warn "the service is not ready, retrying (remaining retry: %s)" % [ limit - try ]
           sleep 10 * try
