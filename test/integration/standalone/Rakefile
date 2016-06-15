@@ -1,9 +1,27 @@
 require 'tempfile'
 require 'pathname'
+require 'net/http'
+require 'tempfile'
 
 test_dir = Pathname.new(__FILE__).dirname
 role_dir = Pathname.new(test_dir).parent.parent.parent
 role_name = Pathname.new(role_dir).basename
+required_roles = %w[ ansible-role-elasticsearch ]
+
+def fetch(uri_str, limit = 10)
+  raise ArgumentError, 'too many HTTP redirects' if limit == 0
+  response = Net::HTTP.get_response(URI(uri_str))
+  case response
+  when Net::HTTPSuccess then
+    response
+  when Net::HTTPRedirection then
+    location = response['location']
+    warn "redirected to #{location}"
+    fetch(location, limit - 1)
+  else
+    raise "HTTP response is not success nor redirect (value: #{response.value})"
+  end
+end
 
 task default: %w[ test ]
 
@@ -12,7 +30,7 @@ task :test => [ :cleanup, :prepare, :do_test, :ensure_cleanup ] do
 end
 
 desc 'cleanup'
-task :cleanup => [ :cleanup_vagrant, :cleanup_role ] do
+task :cleanup => [ :cleanup_vagrant, :cleanup_roles, :cleanup_role ] do
 end
 
 desc 'destroy vagrant nodes'
@@ -26,7 +44,31 @@ task :cleanup_role do
 end
 
 desc 'prepare the test environment'
-task :prepare => [ :prepare_role, :vagrant_up ] do
+task :prepare => [ :prepare_role, :prepare_roles, :vagrant_up ] do
+end
+
+desc 'import required roles'
+task :prepare_roles do
+  required_roles.each do |r|
+    Dir.chdir('roles') do
+      res =  fetch "https://github.com/reallyenglish/#{r}/archive/master.tar.gz"
+      file = Tempfile.new('tar')
+      file.write(res.body)
+      file.close
+      sh "tar xf #{file.path}"
+      file.unlink
+      sh "mv #{r}-master #{r}"
+    end
+  end
+end
+
+desc 'clean up required roles'
+task :cleanup_roles do
+  required_roles.each do |r|
+    Dir.chdir('roles') do
+      sh "rm -rf #{r}"
+    end
+  end
 end
 
 desc 'prepare role'

@@ -8,4 +8,5 @@
     no_proxy: "{{ no_proxy | default() }}"
 
   roles:
+    - role: ansible-role-elasticsearch
     - role: ansible-role-kibana
