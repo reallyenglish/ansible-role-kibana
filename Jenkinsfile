@@ -22,7 +22,7 @@ node ('virtualbox') {
   }
 
     stage 'integration'
-    dir("$directory/integration/standalone") {
+    dir("$directory/test/integration/standalone") {
         try {
           sh 'rake'
         } finally {
