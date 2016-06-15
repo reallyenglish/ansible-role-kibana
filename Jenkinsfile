@@ -32,5 +32,4 @@ node ('virtualbox') {
 
     stage 'Notify'
     step([$class: 'GitHubCommitNotifier', resultOnFailure: 'FAILURE'])
-  }
 }
