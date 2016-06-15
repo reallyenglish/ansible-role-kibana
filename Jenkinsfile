@@ -19,13 +19,14 @@ node ('virtualbox') {
     } finally {
       sh 'bundle exec kitchen destroy'
     }
+  }
 
     stage 'integration'
     dir("$directory/integration/standalone") {
         try {
-          sh 'bundle exec rake'
+          sh 'rake'
         } finally {
-          sh 'bundle exec rake cleanup'
+          sh 'rake cleanup'
         }
     }
 
