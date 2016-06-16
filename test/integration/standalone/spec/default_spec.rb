@@ -5,7 +5,7 @@ end
 
 describe server(:kibana) do
   describe capybara("http://#{server(:kibana).server.address}:5601") do
-    it 'shows "Configure an index pattern' do
+    it 'returns 200' do
       limit = 10
       try = 1
       begin
@@ -20,7 +20,6 @@ describe server(:kibana) do
         end
       end
       expect(page.status_code).to eq 200
-      expect(page).to have_content 'Configure an index pattern'
     end
   end
 end
