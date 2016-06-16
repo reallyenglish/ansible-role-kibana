@@ -1,0 +1,12 @@
+---
+- hosts: kibana
+  become: yes
+  become_method: sudo
+  environment:
+    http_proxy: "{{ http_proxy | default() }}"
+    https_proxy: "{{ https_proxy | default() }}"
+    no_proxy: "{{ no_proxy | default() }}"
+
+  roles:
+    - role: ansible-role-elasticsearch
+    - role: ansible-role-kibana

@@ -19,8 +19,17 @@ node ('virtualbox') {
     } finally {
       sh 'bundle exec kitchen destroy'
     }
+  }
+
+    stage 'integration'
+    dir("$directory/test/integration/standalone") {
+        try {
+          sh 'rake'
+        } finally {
+          sh 'rake cleanup'
+        }
+    }
 
     stage 'Notify'
     step([$class: 'GitHubCommitNotifier', resultOnFailure: 'FAILURE'])
-  }
 }
