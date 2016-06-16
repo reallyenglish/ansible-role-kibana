@@ -8,8 +8,11 @@ require 'serverspec'
 # {"type":"log","@timestamp":"2016-04-11T23:39:17+00:00","tags":["info","optimize"],"pid":1029,"message":"Optimization of bundles for kibana and statusPage complete in 40.45 seconds"}
 # ...
 # {"type":"log","@timestamp":"2016-04-11T23:39:17+00:00","tags":["listening","info"],"pid":1029,"message":"Server running at http://0.0.0.0:5601"}
-
-sleep 150
+if ENV['JENKINS_HOME']
+  sleep 180
+else
+  sleep 40
+end
 
 kibana_package_name = 'kibana'
 kibana_service_name = 'kibana'
