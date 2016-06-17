@@ -17,6 +17,7 @@ describe server(:kibana) do
   it 'uploads sample logs to elasticsearch' do
     result = nil
     retry_and_sleep do
+      # obtained from https://download.elastic.co/demos/kibana/gettingstarted/logs.jsonl.gz
       json = File.read('spec/logs.jsonl')
       result = current_server.ssh_exec("curl -XPOST 'localhost:9200/_bulk?pretty' -d '%s'" % json)
       raise ServiceNotReady if result !~ /"successful" : 1,/
