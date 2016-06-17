@@ -22,12 +22,8 @@ node ('virtualbox') {
   }
 
     stage 'integration'
-    dir("$directory/test/integration/standalone") {
-        try {
-          sh 'rake'
-        } finally {
-          sh 'rake cleanup'
-        }
+    dir("$directory") {
+      sh 'rake'
     }
 
     stage 'Notify'
