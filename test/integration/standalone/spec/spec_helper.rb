@@ -46,6 +46,7 @@ def retry_and_sleep(options = {}, &block)
     warn e.message if verbose
     if (tries -= 1) > 0
       warn "retrying (remaining: %d)" % [ tries ]
+      warn "sleeping %d sec" % [ sec * i ] if verbose
       sleep sec * i
       i += 1
       retry
