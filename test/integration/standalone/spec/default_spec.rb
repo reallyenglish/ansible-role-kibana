@@ -18,10 +18,10 @@ describe server(:kibana) do
     result = nil
     retry_and_sleep do
       json = File.read('spec/logs.jsonl')
-      result = current_server.ssh_exec("curl -XPUT http://localhost:9200/logstash-2015.05.18 -d '%s' >/dev/null 2>&1 && echo -n OK" % json)
-      raise ServiceNotReady if result !~ /OK/
+      result = current_server.ssh_exec("curl -XPOST 'localhost:9200/_bulk?pretty' -d '%s'" % json)
+      raise ServiceNotReady if result !~ /"successful" : 1,/
     end
-    expect(result).to match /OK/
+    expect(result).to match /"successful" : 1,/
   end
   # XXX there is a race condition when sending HTTP request to kibana.
   #
