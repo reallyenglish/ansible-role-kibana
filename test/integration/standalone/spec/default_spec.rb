@@ -18,7 +18,6 @@ describe server(:kibana) do
     result = nil
     retry_and_sleep do
       json = File.read('spec/logs.jsonl')
-      puts json
       result = current_server.ssh_exec("curl -XPUT http://localhost:9200/logstash-2015.05.18 -d '%s' >/dev/null 2>&1 && echo -n OK" % json)
       raise ServiceNotReady if result !~ /OK/
     end
