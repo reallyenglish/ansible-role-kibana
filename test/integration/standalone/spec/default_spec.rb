@@ -24,6 +24,20 @@ describe server(:kibana) do
     end
     expect(result).to match /OK/
   end
+  # XXX there is a race condition when sending HTTP request to kibana.
+  #
+  # at start up, there are three stages:
+  #
+  #   a) kibana does not accept requests because it is not ready
+  #   b) kibana accepts requests, returns 200, showing "please wait ..."
+  #      because it still need time to return the status
+  #   c) kibana accepts requests, returns 5xx because it's now ready but it
+  #      finds no existing Kibana index
+  #
+  # when the next test is executed at stage b), the test will suceeds but when
+  # kibana reaches to stage c) during sleep, the test will fail.
+  #
+  # the solution is loading sample logs into ES in advance.
   describe capybara("http://#{server(:kibana).server.address}:5601") do
     it 'returns 200' do
       retry_and_sleep(:tries => 10, :sec => 10, :verbose => true) do
