@@ -30,6 +30,30 @@ Infrataster::Server.define(
   vagrant: true
 )
 
+def retry_and_sleep(options = {}, &block)
+  opts = {
+    :tries => 10,
+    :sec => 10,
+    :on => [ Exception ],
+    :verbose => false
+  }.merge(options)
+  tries, sec, on, verbose = opts[:tries], opts[:sec], opts[:on], opts[:verbose]
+  i = 1
+  begin
+    yield
+  rescue *on => e
+    warn "rescue an excpetion %s" % [ e.class ] if verbose
+    warn e.message if verbose
+    if (tries -= 1) > 0
+      warn "retrying (remaining: %d)" % [ tries ]
+      warn "sleeping %d sec" % [ sec * i ] if verbose
+      sleep sec * i
+      i += 1
+      retry
+    end
+  end
+end
+
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
