@@ -26,20 +26,20 @@ end
 task default: %w[ test ]
 
 desc 'run rspec'
-task :test => [ :cleanup, :prepare, :do_test, :ensure_cleanup ] do
+task :test => [ :clean, :prepare, :do_test, :ensure_clean ] do
 end
 
-desc 'cleanup'
-task :cleanup => [ :cleanup_vagrant, :cleanup_roles, :cleanup_role ] do
+desc 'clean'
+task :clean => [ :clean_vagrant, :clean_roles, :clean_role ] do
 end
 
 desc 'destroy vagrant nodes'
-task :cleanup_vagrant do
+task :clean_vagrant do
   sh 'vagrant destroy -f'
 end
 
 desc 'rm roles/*'
-task :cleanup_role do
+task :clean_role do
   sh 'rm -rf roles/*'
 end
 
@@ -63,7 +63,7 @@ task :prepare_roles do
 end
 
 desc 'clean up required roles'
-task :cleanup_roles do
+task :clean_roles do
   required_roles.each do |r|
     Dir.chdir('roles') do
       sh "rm -rf #{r}"
@@ -85,13 +85,13 @@ task :vagrant_up do
   sh 'vagrant up'
 end
 
-desc 'do cleanup task even if it has been executed'
-task :ensure_cleanup do
-  Rake::Task["cleanup"].all_prerequisite_tasks.each do |task|
+desc 'do clean task even if it has been executed'
+task :ensure_clean do
+  Rake::Task["clean"].all_prerequisite_tasks.each do |task|
     task.reenable
   end
-  Rake::Task["cleanup"].reenable
-  Rake::Task["cleanup"].invoke
+  Rake::Task["clean"].reenable
+  Rake::Task["clean"].invoke
 end
 
 desc 'Do the test'
