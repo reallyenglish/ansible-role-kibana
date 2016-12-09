@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'serverspec'
 
 # waits for kibana to start listening. in my test environment, it takes around
-# 40 sec. without this, 'kitchen test' would fail.
+# 60 sec. without this, 'kitchen test' would fail.
 #
 # {"type":"log","@timestamp":"2016-04-11T23:38:36+00:00","tags":["info","optimize"],"pid":1029,"message":"Optimizing and caching bundles for kibana and statusPage. This may take a few minutes"}
 # {"type":"log","@timestamp":"2016-04-11T23:39:17+00:00","tags":["info","optimize"],"pid":1029,"message":"Optimization of bundles for kibana and statusPage complete in 40.45 seconds"}
@@ -11,7 +11,7 @@ require 'serverspec'
 if ENV['JENKINS_HOME']
   sleep 180
 else
-  sleep 40
+  sleep 60
 end
 
 kibana_package_name = 'kibana'
