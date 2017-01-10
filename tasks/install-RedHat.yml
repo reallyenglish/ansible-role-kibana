@@ -1,6 +1,6 @@
 ---
 
 - name: Ensure kibana is installed
-  pkgng:
-    name: kibana45
+  yum:
+    name: kibana
     state: present

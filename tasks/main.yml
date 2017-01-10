@@ -3,22 +3,37 @@
 
 - include_vars: "{{ ansible_os_family }}.yml"
 
+- set_fact:
+    kibana_config_merged: "{{ kibana_config_default | combine(kibana_config, recursive = True) }}"
+
 - name: Create log directory
   file:
-    path: "{{ kibana_logging_dest | dirname }}"
-  when: kibana_logging_dest != 'stdout'
+    path: "{{ kibana_config_merged['logging.dest'] | dirname }}"
+    state: directory
 
 - include: "install-{{ ansible_os_family }}.yml"
 
 - name: Configure kibana.yml
   template:
     src: "kibana.yml.j2"
-    dest: "{{ kibana_config }}"
+    dest: "{{ kibana_config_path }}"
     mode: 644
   notify: Restart kibana
+
+- name: Enable kibana
+  service:
+    name: "{{ kibana_service_name }}"
+    enabled: yes
 
 - name: Start kibana
   service:
     name: "{{ kibana_service_name }}"
     state: started
-    enabled: yes
+  register: register_kibana_start
+
+- name: Wait for kibana to start in task
+  wait_for:
+    host: "{% if kibana_config_merged['server.host'] == '0.0.0.0' %}localhost{% else %}{{ kibana_config_merged['server.host'] }}{% endif %}"
+    port: "{{ kibana_config_merged['server.port'] }}"
+  when:
+    - register_kibana_start.changed

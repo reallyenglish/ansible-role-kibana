@@ -1,6 +1,6 @@
 ---
 
 - name: Ensure kibana is installed
-  pkgng:
-    name: kibana45
+  openbsd_pkg:
+    name: kibana
     state: present

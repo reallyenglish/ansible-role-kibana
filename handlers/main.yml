@@ -2,4 +2,12 @@
 # handlers file for ansible-role-kibana
 
 - name: Restart kibana
-  service: name="{{ kibana_service_name }}" state=restarted enabled=yes
+  service:
+    name: "{{ kibana_service_name }}"
+    state: restarted
+  notify: Wait for kibana to start
+
+- name: Wait for kibana to start
+  wait_for:
+    host: "{% if kibana_config_merged['server.host'] == '0.0.0.0' %}localhost{% else %}{{ kibana_config_merged['server.host'] }}{% endif %}"
+    port: "{{ kibana_config_merged['server.port'] }}"
