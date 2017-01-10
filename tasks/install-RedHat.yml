@@ -1,0 +1,6 @@
+---
+
+- name: Ensure kibana is installed
+  yum:
+    name: kibana
+    state: present
