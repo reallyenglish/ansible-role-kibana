@@ -19,11 +19,11 @@ end
 
 describe file("#{kibana_config_path}/kibana.yml") do
   it { should be_file }
-  its(:content) { should match /^server\.port: 5601/ } 
-  its(:content) { should match /^server\.host: 0\.0\.0\.0/ }
-  its(:content) { should match /^elasticsearch\.url: "http:\/\/localhost:9200"/ } 
-  its(:content) { should match /^kibana\.index: "\.kibana"/ }
-  its(:content) { should match /^logging\.dest: "stdout"/ }
+  its(:content_as_yaml) { should include("server.port" => 5601) }
+  its(:content_as_yaml) { should include("server.host" => "0.0.0.0") }
+  its(:content_as_yaml) { should include("elasticsearch.url" => "http://localhost:9200") }
+  its(:content_as_yaml) { should include("kibana.index" => ".kibana") }
+  its(:content_as_yaml) { should include("logging.dest" => "/var/log/kibana/kibana.log") }
 end
 
 describe service(kibana_service_name) do
