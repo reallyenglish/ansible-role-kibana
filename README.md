@@ -11,6 +11,7 @@ None
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `kibana_service_name` | service name | `{{ __kibana_service_name }}` |
+| `kibana_config_dir` | path to directory where `kibana.yml` resides | `{{ __kibana_config_dir }}` |
 | `kibana_config_path` | path to `kibana.yml` | `{{ __kibana_config_dir }}/kibana.yml` |
 | `kibana_config_default` | dict of default values of `kibana.yml` | See below |
 | `kibana_config` | dict that overrides `kibana_config_default` | `{}` |

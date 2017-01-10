@@ -1,7 +1,8 @@
 ---
 # defaults file for ansible-role-kibana
 kibana_service_name: "{{ __kibana_service_name }}"
-kibana_config_path: "{{ __kibana_config_dir }}/kibana.yml"
+kibana_config_dir: "{{ __kibana_config_dir }}"
+kibana_config_path: "{{ kibana_config_dir }}/kibana.yml"
 
 kibana_config_default:
   server.port: 5601
