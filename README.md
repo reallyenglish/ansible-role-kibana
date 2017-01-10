@@ -59,11 +59,25 @@ kibana_config_default:
 
 # Example Playbook
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: ansible-role-kibana, kibana_server_port: 8080 }
+```yaml
+- hosts: localhost
+  roles:
+    - { role: reallyenglish.apt-repo, when: ansible_os_family == 'Debian' }
+    - { role: reallyenglish.redhat-repo, when: ansible_os_family == 'RedHat' }
+    - ansible-role-kibana
+  vars:
+    apt_repo_to_add:
+      - deb https://packages.elastic.co/kibana/4.6/debian stable main
+    apt_repo_keys_to_add:
+      - https://packages.elastic.co/GPG-KEY-elasticsearch
+    apt_repo_enable_apt_transport_https: yes
+    redhat_repo:
+      kibana-4.6:
+        baseurl: https://packages.elastic.co/kibana/4.6/centos
+        gpgcheck: yes
+        gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+        enabled: yes
+```
 
 # License
 
