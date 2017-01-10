@@ -33,7 +33,7 @@
 
 - name: Wait for kibana to start in task
   wait_for:
-    host: localhost
+    host: "{% if kibana_config_merged['server.host'] == '0.0.0.0' %}localhost{% else %}{{ kibana_config_merged['server.host'] }}{% endif %}"
     port: "{{ kibana_config_merged['server.port'] }}"
   when:
     - register_kibana_start.changed
