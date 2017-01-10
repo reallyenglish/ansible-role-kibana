@@ -1,0 +1,6 @@
+---
+
+- name: Ensure kibana is installed
+  openbsd_pkg:
+    name: kibana
+    state: present
