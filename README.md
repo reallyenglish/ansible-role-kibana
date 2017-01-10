@@ -57,6 +57,9 @@ kibana_config_default:
 
 # Dependencies
 
+* reallyenglish.redhat-repo (RedHat only)
+* reallyenglish.apt-repo (Debian only)
+
 # Example Playbook
 
 ```yaml
