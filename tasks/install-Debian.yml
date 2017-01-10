@@ -1,0 +1,6 @@
+---
+
+- name: Ensure kibana is installed
+  apt:
+    name: kibana
+    state: present
