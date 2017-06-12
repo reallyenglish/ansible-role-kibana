@@ -68,7 +68,7 @@ describe file(log_file) do
   end
   it do
     pending "logging.dest does not work, see #18" if os[:family] == "ubuntu" || os[:family] == "redhat"
-    should be_mode os[:family] == 'FreeBSD' ? 640 : 644
+    should be_mode os[:family] == "freebsd" ? 640 : 644
   end
 end
 
