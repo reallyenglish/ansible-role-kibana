@@ -1,0 +1,10 @@
+# Managed by ansible
+user="{{ kibana_user }}"
+group="{{ kibana_group }}"
+chroot="/"
+chdir="/"
+nice=""
+
+{% for k, v in kibana_default_redhat | dictsort() %}
+{{ k }}="{{ v }}"
+{% endfor %}
