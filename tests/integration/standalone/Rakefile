@@ -39,11 +39,15 @@ end
 
 desc "prepare role"
 task :prepare_role do
+  # rubocop:disable Metrics/LineLength
   ignore_files = %w(vendor .kitchen .git tests spec).map { |f| "#{role_name}/#{f}" }
+  # rubocop:enable Metrics/LineLength
   tmpfile = Tempfile.new(".tarignore")
   tmpfile.write ignore_files.join("\n")
   tmpfile.close
+  # rubocop:disable Metrics/LineLength
   sh "tar -c -X #{tmpfile.path} -C #{role_dir.parent} -f - #{role_name} | tar -x -C #{test_dir}/roles -f -"
+  # rubocop:enable Metrics/LineLength
 end
 
 desc "vagrant up"

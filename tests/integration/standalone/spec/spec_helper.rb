@@ -5,6 +5,7 @@ ENV["VAGRANT_CWD"] = File.dirname(__FILE__)
 ENV["LANG"] = "C"
 
 if ENV["JENKINS_HOME"]
+  # rubocop:disable Metrics/LineLength
   # XXX "bundle exec vagrant" fails to load.
   # https://github.com/bundler/bundler/issues/4602
   #
@@ -20,6 +21,7 @@ if ENV["JENKINS_HOME"]
   #
   # include the path of bin to vagrant
   vagrant_real_path = `pkg info -l vagrant | grep -v '/usr/local/bin/vagrant' | grep -E 'bin\/vagrant$'| sed -e 's/^[[:space:]]*//'`
+  # rubocop:enable Metrics/LineLength
   vagrant_bin_dir = File.dirname(vagrant_real_path)
   ENV["PATH"] = "#{vagrant_bin_dir}:#{ENV['PATH']}"
 end
@@ -31,25 +33,15 @@ Infrataster::Server.define(
 )
 
 def retry_and_sleep(options = {})
-  opts = {
-    tries: 10,
-    sec: 10,
-    on: [Exception],
-    verbose: false
-  }.merge(options)
+  opts = { tries: 10, sec: 10, on: [Exception], verbose: false }.merge(options)
   tries = opts[:tries]
   sec = opts[:sec]
-  on = opts[:on]
-  verbose = opts[:verbose]
   i = 1
   begin
     yield
-  rescue *on => e
-    warn format("rescue an excpetion %s", e.class) if verbose
-    warn e.message if verbose
+  rescue
     if (tries -= 1) > 0
       warn format("retrying (remaining: %d)", tries)
-      warn format("sleeping %d sec", sec * i) if verbose
       sleep sec * i
       i += 1
       retry
