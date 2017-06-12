@@ -111,7 +111,6 @@ when "freebsd"
     its(:content) { should match(/^kibana_group="www"$/) }
     its(:content) { should match(/^kibana_log="#{Regexp.escape("/var/log/kibana/kibana.log")}"$/) }
     its(:content) { should match(/^kibana_config="#{Regexp.escape("/usr/local/etc/kibana.yml")}"$/) }
-
   end
 end
 
