@@ -11,10 +11,14 @@ None
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `kibana_service_name` | service name | `{{ __kibana_service_name }}` |
+| `kibana_user` | user name of `kibana` | `{{ __kibana_user }}` |
+| `kibana_group` | group name of `kibana` | `{{ __kibana_group }}` |
 | `kibana_config_dir` | path to directory where `kibana.yml` resides | `{{ __kibana_config_dir }}` |
 | `kibana_config_path` | path to `kibana.yml` | `{{ __kibana_config_dir }}/kibana.yml` |
 | `kibana_config_default` | dict of default values of `kibana.yml` | See below |
 | `kibana_config` | dict that overrides `kibana_config_default` | `{}` |
+| `kibana_default_ubuntu` | dict of settings in `/etc/default/kibana`. see below (Ubuntu only) | `{"KILL_ON_STOP_TIMEOUT"=>"0"}` |
+| `kibana_default_redhat` | dict of settings in `/etc/sysconfig/kibana`. see below (Red Hat only) | `{}` |
 
 ## `kibana_config_default`
 
@@ -33,6 +37,29 @@ kibana_config_default:
 |----------|---------|
 | `__kibana_config_dir` | `/etc` |
 | `__kibana_service_name` | `kibana` |
+| `__kibana_user` | `kibana` |
+| `__kibana_group` | `kibana` |
+
+### `kibana_default_ubuntu`
+
+A dict of variables and values in `/etc/default/kibana`.
+
+| Key | Value |
+|-----|-------|
+| variable name | the value |
+
+Given the following YAML,
+
+```yaml
+kibana_default_ubuntu:
+ FOO: bar
+```
+
+The role generates `/etc/default/kibana`
+
+```
+FOO="bar"
+```
 
 ## FreeBSD
 
@@ -40,6 +67,8 @@ kibana_config_default:
 |----------|---------|
 | `__kibana_config_dir` | `/usr/local/etc` |
 | `__kibana_service_name` | `kibana` |
+| `__kibana_user` | `www` |
+| `__kibana_group` | `www` |
 
 ## OpenBSD
 
@@ -47,6 +76,8 @@ kibana_config_default:
 |----------|---------|
 | `__kibana_config_dir` | `/etc` |
 | `__kibana_service_name` | `kibana` |
+| `__kibana_user` | `_kibana` |
+| `__kibana_group` | `_kibana` |
 
 ## RedHat
 
@@ -54,6 +85,29 @@ kibana_config_default:
 |----------|---------|
 | `__kibana_config_dir` | `/etc` |
 | `__kibana_service_name` | `kibana` |
+| `__kibana_user` | `kibana` |
+| `__kibana_group` | `kibana` |
+
+### `kibana_default_redhat`
+
+A dict of variables and values in `/etc/sysconfig/kibana`.
+
+| Key | Value |
+|-----|-------|
+| variable name | the value |
+
+Given the following YAML,
+
+```yaml
+kibana_default_redhat:
+ FOO: bar
+```
+
+The role generates `/etc/sysconfig/kibana`
+
+```
+FOO="bar"
+```
 
 # Dependencies
 
