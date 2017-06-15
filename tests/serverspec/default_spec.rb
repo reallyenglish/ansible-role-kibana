@@ -107,8 +107,8 @@ when "freebsd"
     it { should be_owned_by default_user }
     it { should be_grouped_into default_group }
     it { should be_mode 644 }
-    its(:content) { should match(/^kibana_user="www"$/) }
-    its(:content) { should match(/^kibana_group="www"$/) }
+    its(:content) { should match(/^kibana_user="#{kibana_user_name}"$/) }
+    its(:content) { should match(/^kibana_group="#{kibana_user_name}"$/) }
     its(:content) { should match(/^kibana_log="#{Regexp.escape("/var/log/kibana/kibana.log")}"$/) }
     its(:content) { should match(/^kibana_config="#{Regexp.escape("/usr/local/etc/kibana.yml")}"$/) }
   end
