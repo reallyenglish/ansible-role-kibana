@@ -5,7 +5,8 @@
     src: Ubuntu.default.j2
     dest: /etc/default/kibana
     # any files under /etc/default should be mode 644, but the package installs
-    # the file as mode 0664
+    # the file as mode 0664. see
+    # https://github.com/reallyenglish/ansible-role-kibana/pull/19#discussion_r122110765
     mode: 0644
     backup: yes
     validate: sh -n %s
