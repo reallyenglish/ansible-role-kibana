@@ -1,10 +1,11 @@
-require 'infrataster/rspec'
-require 'capybara'
+require "infrataster/rspec"
+require "capybara"
 
-ENV['VAGRANT_CWD'] = File.dirname(__FILE__)
-ENV['LANG'] = 'C'
+ENV["VAGRANT_CWD"] = File.dirname(__FILE__)
+ENV["LANG"] = "C"
 
-if ENV['JENKINS_HOME']
+if ENV["JENKINS_HOME"]
+  # rubocop:disable Metrics/LineLength
   # XXX "bundle exec vagrant" fails to load.
   # https://github.com/bundler/bundler/issues/4602
   #
@@ -20,33 +21,27 @@ if ENV['JENKINS_HOME']
   #
   # include the path of bin to vagrant
   vagrant_real_path = `pkg info -l vagrant | grep -v '/usr/local/bin/vagrant' | grep -E 'bin\/vagrant$'| sed -e 's/^[[:space:]]*//'`
+  # rubocop:enable Metrics/LineLength
   vagrant_bin_dir = File.dirname(vagrant_real_path)
-  ENV['PATH'] = "#{vagrant_bin_dir}:#{ENV['PATH']}"
+  ENV["PATH"] = "#{vagrant_bin_dir}:#{ENV['PATH']}"
 end
 
 Infrataster::Server.define(
   :kibana,
-  '192.168.107.100',
+  "192.168.107.100",
   vagrant: true
 )
 
-def retry_and_sleep(options = {}, &block)
-  opts = {
-    :tries => 10,
-    :sec => 10,
-    :on => [ Exception ],
-    :verbose => false
-  }.merge(options)
-  tries, sec, on, verbose = opts[:tries], opts[:sec], opts[:on], opts[:verbose]
+def retry_and_sleep(options = {})
+  opts = { tries: 10, sec: 10, on: [Exception], verbose: false }.merge(options)
+  tries = opts[:tries]
+  sec = opts[:sec]
   i = 1
   begin
     yield
-  rescue *on => e
-    warn "rescue an excpetion %s" % [ e.class ] if verbose
-    warn e.message if verbose
+  rescue
     if (tries -= 1) > 0
-      warn "retrying (remaining: %d)" % [ tries ]
-      warn "sleeping %d sec" % [ sec * i ] if verbose
+      warn format("retrying (remaining: %d)", tries)
       sleep sec * i
       i += 1
       retry

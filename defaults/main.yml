@@ -1,6 +1,8 @@
 ---
 # defaults file for ansible-role-kibana
 kibana_service_name: "{{ __kibana_service_name }}"
+kibana_user: "{{ __kibana_user }}"
+kibana_group: "{{ __kibana_group }}"
 kibana_config_dir: "{{ __kibana_config_dir }}"
 kibana_config_path: "{{ kibana_config_dir }}/kibana.yml"
 
@@ -12,3 +14,7 @@ kibana_config_default:
   elasticsearch.url: http://localhost:9200
 
 kibana_config: {}
+
+kibana_default_ubuntu:
+  KILL_ON_STOP_TIMEOUT: "0"
+kibana_default_redhat: {}

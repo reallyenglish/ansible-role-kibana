@@ -6,18 +6,22 @@
 - set_fact:
     kibana_config_merged: "{{ kibana_config_default | combine(kibana_config, recursive = True) }}"
 
+- include: "install-{{ ansible_os_family }}.yml"
+
+- include: "configure-{{ ansible_os_family }}.yml"
+
 - name: Create log directory
   file:
     path: "{{ kibana_config_merged['logging.dest'] | dirname }}"
+    owner: "{{ kibana_user }}"
+    group: "{{ kibana_group }}"
     state: directory
-
-- include: "install-{{ ansible_os_family }}.yml"
 
 - name: Configure kibana.yml
   template:
     src: "kibana.yml.j2"
     dest: "{{ kibana_config_path }}"
-    mode: 644
+    mode: 0644
   notify: Restart kibana
 
 - name: Enable kibana
