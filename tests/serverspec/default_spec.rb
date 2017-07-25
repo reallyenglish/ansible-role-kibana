@@ -50,21 +50,11 @@ describe file(log_directory) do
 end
 
 describe file(log_file) do
-  it do
-    should exist
-  end
-  it do
-    should be_file
-  end
-  it do
-    should be_owned_by kibana_user_name
-  end
-  it do
-    should be_grouped_into kibana_user_group
-  end
-  it do
-    should be_mode os[:family] == "freebsd" ? 640 : 644
-  end
+  it { should exist }
+  it { should be_file }
+  it { should be_owned_by kibana_user_name }
+  it { should be_grouped_into kibana_user_group }
+  it { should be_mode os[:family] == "freebsd" ? 640 : 644 }
 end
 
 case os[:family]
