@@ -1,0 +1,10 @@
+--- kibana.service.orig	2017-07-25 10:06:39.742520000 +0000
++++ kibana.service	2017-07-25 10:06:52.324808004 +0000
+@@ -10,7 +10,7 @@
+ # exist, it continues onward.
+ EnvironmentFile=-/etc/default/kibana
+ EnvironmentFile=-/etc/sysconfig/kibana
+-ExecStart=/opt/kibana/bin/kibana 
++ExecStart=/opt/kibana/bin/kibana $args
+ Restart=always
+ WorkingDirectory=/

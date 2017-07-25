@@ -38,7 +38,7 @@ describe file(kibana_config_path) do
   its(:content_as_yaml) { should include("server.host" => "0.0.0.0") }
   its(:content_as_yaml) { should include("elasticsearch.url" => "http://localhost:9200") }
   its(:content_as_yaml) { should include("kibana.index" => ".kibana") }
-  its(:content_as_yaml) { should include("logging.dest" => "/var/log/kibana/kibana.log") }
+  its(:content_as_yaml) { should include("logging.dest" => log_file) }
 end
 
 describe file(log_directory) do
@@ -51,23 +51,18 @@ end
 
 describe file(log_file) do
   it do
-    pending "logging.dest does not work, see #18" if os[:family] == "ubuntu" || os[:family] == "redhat"
     should exist
   end
   it do
-    pending "logging.dest does not work, see #18" if os[:family] == "ubuntu" || os[:family] == "redhat"
     should be_file
   end
   it do
-    pending "logging.dest does not work, see #18" if os[:family] == "ubuntu" || os[:family] == "redhat"
     should be_owned_by kibana_user_name
   end
   it do
-    pending "logging.dest does not work, see #18" if os[:family] == "ubuntu" || os[:family] == "redhat"
     should be_grouped_into kibana_user_group
   end
   it do
-    pending "logging.dest does not work, see #18" if os[:family] == "ubuntu" || os[:family] == "redhat"
     should be_mode os[:family] == "freebsd" ? 640 : 644
   end
 end
@@ -109,8 +104,8 @@ when "freebsd"
     it { should be_mode 644 }
     its(:content) { should match(/^kibana_user="#{kibana_user_name}"$/) }
     its(:content) { should match(/^kibana_group="#{kibana_user_group}"$/) }
-    its(:content) { should match(/^kibana_log="#{Regexp.escape("/var/log/kibana/kibana.log")}"$/) }
-    its(:content) { should match(/^kibana_config="#{Regexp.escape("/usr/local/etc/kibana.yml")}"$/) }
+    its(:content) { should match(/^kibana_log="#{Regexp.escape(log_file)}"$/) }
+    its(:content) { should match(/^kibana_config="#{Regexp.escape(kibana_config_path)}"$/) }
   end
 end
 
