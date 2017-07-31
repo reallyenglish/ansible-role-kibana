@@ -4,3 +4,18 @@
   apt:
     name: kibana
     state: present
+
+- name: Patch kibana.service
+  patch:
+    backup: yes
+    dest: /etc/systemd/system/kibana.service
+    src: files/Debian/patch-kibana.service
+  register: register_patch_kibana_service
+  notify: Restart kibana
+  when:
+    - "ansible_distribution_version | version_compare('16.04', '>=')"
+
+- name: Restart systemd
+  command: systemctl daemon-reload
+  when:
+    - register_patch_kibana_service.changed

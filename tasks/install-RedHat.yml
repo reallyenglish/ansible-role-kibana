@@ -4,3 +4,21 @@
   yum:
     name: kibana
     state: present
+
+- name: Install patch
+  yum:
+    name: patch
+    state: present
+
+- name: Patch kibana.service
+  patch:
+    backup: yes
+    dest: /etc/systemd/system/kibana.service
+    src: files/RedHat/patch-kibana.service
+  register: register_patch_kibana_service
+  notify: Restart kibana
+
+- name: Restart systemd
+  command: systemctl daemon-reload
+  when:
+    - register_patch_kibana_service.changed
