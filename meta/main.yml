@@ -24,5 +24,3 @@ galaxy_info:
     - log
     - logging
 dependencies:
-  - { role: reallyenglish.apt-repo, when: ansible_os_family == 'Debian' }
-  - { role: reallyenglish.redhat-repo, when: ansible_os_family == 'RedHat' }

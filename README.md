@@ -111,16 +111,17 @@ FOO="bar"
 
 # Dependencies
 
-* reallyenglish.redhat-repo (RedHat only)
-* reallyenglish.apt-repo (Debian only)
+None
 
 # Example Playbook
 
 ```yaml
 - hosts: localhost
   roles:
-    - { role: reallyenglish.apt-repo, when: ansible_os_family == 'Debian' }
-    - { role: reallyenglish.redhat-repo, when: ansible_os_family == 'RedHat' }
+    - role: reallyenglish.apt-repo
+      when: ansible_os_family == 'Debian'
+    - role: reallyenglish.redhat-repo
+      when: ansible_os_family == 'RedHat'
     - ansible-role-kibana
   vars:
     apt_repo_to_add:
@@ -134,6 +135,7 @@ FOO="bar"
         gpgcheck: yes
         gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
         enabled: yes
+      
 ```
 
 # License
