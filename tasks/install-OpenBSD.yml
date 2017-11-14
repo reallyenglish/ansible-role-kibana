@@ -2,5 +2,5 @@
 
 - name: Ensure kibana is installed
   openbsd_pkg:
-    name: kibana
+    name: "{{ kibana_package_name }}"
     state: present

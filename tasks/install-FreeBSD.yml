@@ -2,5 +2,5 @@
 
 - name: Ensure kibana is installed
   pkgng:
-    name: kibana45
+    name: "{{ kibana_package_name }}"
     state: present

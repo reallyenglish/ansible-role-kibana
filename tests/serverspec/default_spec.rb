@@ -19,7 +19,7 @@ when "freebsd"
   default_group = "wheel"
   kibana_user_group = "www"
   kibana_user_name = "www"
-  kibana_package_name = "kibana45"
+  kibana_package_name = "kibana46"
   kibana_config_path = "/usr/local/etc/kibana.yml"
 end
 log_file = "#{log_directory}/kibana.log"

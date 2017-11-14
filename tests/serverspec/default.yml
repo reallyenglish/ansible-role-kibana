@@ -6,6 +6,7 @@
       when: ansible_os_family == 'RedHat'
     - ansible-role-kibana
   vars:
+    kibana_package_name: "{% if ansible_os_family == 'FreeBSD' %}kibana46{% else %}kibana{% endif %}"
     apt_repo_to_add:
       - deb https://packages.elastic.co/kibana/4.6/debian stable main
     apt_repo_keys_to_add:
@@ -17,4 +18,3 @@
         gpgcheck: yes
         gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
         enabled: yes
-      

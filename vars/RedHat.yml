@@ -1,4 +1,5 @@
 ---
+__kibana_package_name: kibana
 __kibana_config_dir: /etc
 __kibana_service_name: kibana
 __kibana_user: kibana

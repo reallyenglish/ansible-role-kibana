@@ -10,6 +10,7 @@ None
 
 | Variable | Description | Default |
 |----------|-------------|---------|
+| `kibana_package_name` | package name | `{{ __kibana_package_name }}` |
 | `kibana_service_name` | service name | `{{ __kibana_service_name }}` |
 | `kibana_user` | user name of `kibana` | `{{ __kibana_user }}` |
 | `kibana_group` | group name of `kibana` | `{{ __kibana_group }}` |
@@ -30,15 +31,6 @@ kibana_config_default:
   logging.dest: /var/log/kibana/kibana.log
   elasticsearch.url: http://localhost:9200
 ```
-
-## Debian
-
-| Variable | Default |
-|----------|---------|
-| `__kibana_config_dir` | `/etc` |
-| `__kibana_service_name` | `kibana` |
-| `__kibana_user` | `kibana` |
-| `__kibana_group` | `kibana` |
 
 ### `kibana_default_ubuntu`
 
@@ -61,10 +53,21 @@ The role generates `/etc/default/kibana`
 FOO="bar"
 ```
 
+## Debian
+
+| Variable | Default |
+|----------|---------|
+| `__kibana_package_name` | `kibana` |
+| `__kibana_config_dir` | `/etc` |
+| `__kibana_service_name` | `kibana` |
+| `__kibana_user` | `kibana` |
+| `__kibana_group` | `kibana` |
+
 ## FreeBSD
 
 | Variable | Default |
 |----------|---------|
+| `__kibana_package_name` | `kibana45` |
 | `__kibana_config_dir` | `/usr/local/etc` |
 | `__kibana_service_name` | `kibana` |
 | `__kibana_user` | `www` |
@@ -74,6 +77,7 @@ FOO="bar"
 
 | Variable | Default |
 |----------|---------|
+| `__kibana_package_name` | `kibana` |
 | `__kibana_config_dir` | `/etc` |
 | `__kibana_service_name` | `kibana` |
 | `__kibana_user` | `_kibana` |
@@ -83,6 +87,7 @@ FOO="bar"
 
 | Variable | Default |
 |----------|---------|
+| `__kibana_package_name` | `kibana` |
 | `__kibana_config_dir` | `/etc` |
 | `__kibana_service_name` | `kibana` |
 | `__kibana_user` | `kibana` |
@@ -124,6 +129,7 @@ None
       when: ansible_os_family == 'RedHat'
     - ansible-role-kibana
   vars:
+    kibana_package_name: "{% if ansible_os_family == 'FreeBSD' %}kibana46{% else %}kibana{% endif %}"
     apt_repo_to_add:
       - deb https://packages.elastic.co/kibana/4.6/debian stable main
     apt_repo_keys_to_add:
@@ -135,7 +141,6 @@ None
         gpgcheck: yes
         gpgkey: https://artifacts.elastic.co/GPG-KEY-elasticsearch
         enabled: yes
-      
 ```
 
 # License
