@@ -2,7 +2,7 @@
 
 - name: Ensure kibana is installed
   apt:
-    name: kibana
+    name: "{{ kibana_package_name }}"
     state: present
 
 - name: Patch kibana.service

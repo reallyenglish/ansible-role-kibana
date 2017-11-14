@@ -1,5 +1,6 @@
 ---
 # defaults file for ansible-role-kibana
+kibana_package_name: "{{ __kibana_package_name }}"
 kibana_service_name: "{{ __kibana_service_name }}"
 kibana_user: "{{ __kibana_user }}"
 kibana_group: "{{ __kibana_group }}"

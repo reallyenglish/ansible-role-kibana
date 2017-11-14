@@ -2,7 +2,7 @@
 
 - name: Ensure kibana is installed
   yum:
-    name: kibana
+    name: "{{ kibana_package_name }}"
     state: present
 
 - name: Install patch
