@@ -1,3 +1,8 @@
+## Release 1.2.0
+
+* aaf4233 [feature] support different package name (#26)
+
+
 ## Release 1.1.1
 
 * 5ee5f32 [bugfix] make role soft-depend on apt-repo and redhat-repo (#24)
